@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Set PIN</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .main-section {
+            width: 100%;
+            min-height: 100vh;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+
+            background: #FFE10F;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            padding-top: 15px;
+            ;
+            /* background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+            background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+            background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+            background: linear-gradient(-135deg, #c850c0, #4158d0); */
+        }
+
+        .card-section {
+            width: auto;
+            height: auto;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            /* padding: 177px 130px 33px 95px; */
+        }
+
+        .card-pic {
+            will-change: transform;
+            transform: perspective(300px) rotateX(0deg) rotateY(0deg);
+            width: 316px;
+        }
+
+        .input-div {
+            position: relative;
+            width: 100%;
+            z-index: 1;
+            margin: 10px 20px;
+        }
+
+        .input-01 {
+            font-family: "Gotham-Light";
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: block;
+            border: none;
+            width: 70%;
+            background: #e6e6e6;
+            height: 50px;
+            border-radius: 25px;
+            padding: 0 25px 0 25px;
+        }
+
+        .input-02 {
+            font-family: Poppins-Medium;
+            font-size: 15px;
+            line-height: 1.5;
+            color: #666666;
+            display: inline;
+            text-align: center;
+            border: none;
+            width: 10%;
+            background: #e6e6e6;
+            height: 50px;
+            border-radius: 7px;
+            padding: 0px 5px 0 5px;
+        }
+
+        .input-wd {
+            width: 10px;
+            display: inline;
+        }
+
+        .input-btn-div {
+            width: 100%;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding-top: 20px;
+        }
+
+        .input-btn {
+            font-family: "Gotham-Bold";
+            font-size: 15px;
+            line-height: 1.5;
+            color: black;
+            /* text-transform: uppercase; */
+            width: 70%;
+            height: 50px;
+            border-radius: 25px;
+            border: none;
+            background: #FFE10F;
+            ;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            /* padding: 0 25px; */
+            transition: all 0.4s;
+        }
+
+        .img-footer {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .img-footer img {
+            width: 50px;
+        }
+
+        .capitalize {
+
+            padding: 20px 110px;
+            /* background-color: #8555c8; */
+            font-size: 17px;
+            color: black;
+            height: 25px;
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: "Gotham-Bold";
+        }
+
+        .input-pd {
+            padding: 0px 50px;
+        }
+
+        ::placeholder {
+            font-family: "Gotham-Light";
+
+        }
+
+        @font-face {
+            font-family: "Gotham-Bold";
+            src: url("./assets/Gotham-Font/Gotham-Bold.otf");
+        }
+
+        @font-face {
+            font-family: "Gotham-Light";
+            src: url("./assets/Gotham-Font/Gotham-Light.otf");
+        }
+
+
+        #expiry_date,
+        #dob {
+            border: none;
+            background: #e6e6e6;
+            display: block;
+            padding: 15px 20px;
+            width: 74%;
+            outline: none;
+            color: #666666;
+            height: 20px;
+            border-radius: 25px;
+            font-family: "Gotham-Light";
+            font-size: 15px;
+            transition: 250ms width ease, 250ms border-color ease;
+        }
+
+        @media (min-width:320px) {
+            .capitalize {
+                padding: 26px 51px;
+                font-size: 15px;
+
+            }
+
+            .input-01::placeholder {
+                font-size: 12px;
+
+            }
+
+            #dob::placeholder {
+                font-size: 12px;
+
+            }
+
+            .exp-date::placeholder {
+                font-size: 12px;
+            }
+
+            #expiry_date::placeholder {
+                font-size: 12px;
+
+            }
+
+            .input-btn {
+                font-size: 13px;
+            }
+
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main-section">
+        <div class="card-section">
+            <!-- 1st card -->
+            <div class="details-section" id="details-section" style="display: none;">
+                <h1 class="capitalize">Enter ausper Card Details</h1>
+                <form id="myForm" action="">
+                    <div class="input-div">
+                        <input class="input-01" type="text" id="card_number" name="card_number"
+                            placeholder="Enter last 6 digits of card number" onkeypress="return isNumber(event)"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+                            maxlength="6">
+                    </div>
+                    <div class="input-div">
+                        <input class="input-01 " placeholder="Choose card’s expiry date" type="text" onfocus="(this.type = 'month')"
+                            id="expiry_date" name="expiry_date">
+                    </div>
+                    <div class="input-btn-div">
+                        <input class="input-btn" type="button" onclick="details()" value="Verify Card Details">
+                    </div>
+                    <footer class="img-footer">
+                        <img src="./assets/images/logo.png" alt="Yap log">
+                    </footer>
+                </form>
+            </div>
+
+            <!-- 2card -->
+            <div class="pin-section" id="pin-section" style="display: block;">
+                <h1 class="capitalize">Set PIN</h1>
+                <form id="myForm" action="">
+                    <div class="input-div">
+                        <input class="input-01" type="text" id="otp" name="otp" onkeypress="return isNumber(event)"
+                            placeholder="Enter the OTP"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    </div>
+                    <div class="input-div">
+                        <!-- <input class="input-01 card" type="date" id="dob" name="dob"
+                           placeholder="Select DOB" autocomplete="off" data-on="Enabled" data-off="Disabled"> -->
+                        <input class="input-01" placeholder="Select the DOB" type="text" onfocus="(this.type = 'date')" id="dob"
+                            name="dob">
+
+                    </div>
+                    <div class="input-div">
+                        <input class="input-01" type="password" id="newPin" name="new_pin"
+                            onkeypress="return isNumber(event)" maxlength="4" placeholder="Enter the new PIN"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    </div>
+                    <div class="input-div">
+                        <input class="input-01" type="password" id="confirmPin" name="confirm_pin"
+                            onkeypress="return isNumber(event)" maxlength="4" placeholder="Confirm the new PIN"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    </div>
+                    <div class="input-btn-div">
+                        <input class="input-btn" type="button" onclick="setPinWithOtp()" value="Set PIN">
+                    </div>
+                    <footer class="img-footer">
+                        <img src="./assets/images/logo.png" alt="Yap log">
+                    </footer>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://cdn.rawgit.com/CryptoStore/crypto-js/3.1.2/build/rollups/aes.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script>
+    let bob = null;
+    let aliceKeyImported = null;
+    let cek = null;
+    let sharedSecretHex = null;
+    window.crypto.subtle.generateKey(
+        {
+            name: 'ECDH',
+            namedCurve: 'P-256'
+        },
+        false, // no need to make Bob's private key exportable
+        ['deriveKey', 'deriveBits'])
+        .then(bobKey => {
+            bob = bobKey;
+            // export Bob's public key
+            return window.crypto.subtle.exportKey(
+                'raw', bobKey.publicKey)
+        }).then(bobPublicKeyExported => {
+            const bobPublicKeyHex = buf2Hex(bobPublicKeyExported);
+            // display and send Bob's public key to Alice
+            console.log(`Bob's publicKey: ${bobPublicKeyHex}`);
+            var publicKeyFinal = {};
+            publicKeyFinal.publicKey = bobPublicKeyHex;
+            publicKeyFinal.setPin = true;
+
+            // aliceKeyImported = hex2Arr("048d049b2efe6577ebea5fb4b34e50273e73b41e3e826ab18cb08e966f5abe9030929be43195270bf139b9b16a00729e6fb1db5eb0169be8935e00275aa00521c7");
+            cek = "7ec00e36f83980c23f68ff0f9d399cebb18c6218f162e0c04097c70cd0e09802";
+            $.ajax({
+                url: '/url/fetchPublicKeyAndCek',
+                type: 'POST',
+                data: publicKeyFinal,
+                async: false,
+                success: function (publicKey, status) {
+                    aliceKeyImported = hex2Arr(publicKey[0]);
+                    if (publicKey[1] !== null) {
+                        cek = publicKey[1];
+                        console.log("SCK" + cek);
+                    }
+                }
+            });
+            return window.crypto.subtle.importKey(
+                'raw',
+                aliceKeyImported,
+                {
+                    name: 'ECDH',
+                    namedCurve: 'P-256'
+                },
+                true,
+                [])
+        }).then(aliceKeyImported => {
+            // use Alice's imported public key and
+            // Bob's private key to compute the shared secret
+            return window.crypto.subtle.deriveBits({
+                name: 'ECDH',
+                namedCurve: 'P-256',
+                public: aliceKeyImported
+            },
+                bob.privateKey,
+                256)
+        }).then(sharedSecret => {
+            sharedSecretHex = buf2Hex(sharedSecret);
+            console.log(`sharedSecret: ${sharedSecretHex}`)
+        }).catch(err => {
+            console.log(err)
+        });
+
+    const hex2Arr = str => {
+        if (!str) {
+            return new Uint8Array()
+        }
+        const arr = [];
+        for (let i = 0, len = str.length; i < len; i += 2) {
+            arr.push(parseInt(str.substr(i, 2), 16))
+        }
+        return new Uint8Array(arr)
+    };
+
+    const buf2Hex = buf => {
+        return Array.from(new Uint8Array(buf))
+            .map(x => ('00' + x.toString(16)).slice(-2))
+            .join('')
+    };
+    let pinshow = false;
+    var response = '';
+    var randomUrlToken = location.href;
+    var matchToken = /\=\|([^>]*)/i;
+    var randomToken = randomUrlToken.match(matchToken);
+
+    function details() {
+        var card_number = document.getElementById("card_number").value;
+        var expiry_date = $("#expiry_date").val();
+        if (expiry_date === "" || expiry_date === null) {
+            alert("Enter Expiry Date (MMYY)");
+        }
+        expiry_date = moment(expiry_date).format("MMYY");
+
+        var verifyCardDetails = {};
+        verifyCardDetails.cardNoLastsix = card_number;
+        verifyCardDetails.expiryDate = expiry_date;
+        console.log("Expiry Date :: " + expiry_date);
+
+        if (card_number === "" || card_number === null) {
+            alert("Enter Last 6 digit of Card Number");
+        } else {
+            var ctObj = {};
+            ctObj.encryptedReq = CryptoJS.AES.encrypt(JSON.stringify(verifyCardDetails), sharedSecretHex).toString();
+
+            $.ajax({
+                url: '/url/confirmCardDetails',
+                type: 'POST',
+                headers: { 'randomToken': randomToken[1] },
+                data: ctObj,
+                success: function (res) {
+                    response = res;
+                    alert("ausper card validation success. Please enter the OTP and PIN.");
+                    document.getElementById("details-section").style.display = "none";
+                    document.getElementById("pin-section").style.display = "block";
+                },
+                error: function (XMLHttpRequest) {
+                    alert(XMLHttpRequest.responseText);
+                }
+            });
+
+        }
+    }
+
+    function setPinWithOtp() {
+        var otp = document.getElementById("otp").value;
+        // var dob = document.getElementById("dob").value;
+        var dob = $("#dob").val();
+        dob = moment(dob).format("DDMMYYYY");
+
+        var newPin = document.getElementById("newPin").value;
+        var confirmPin = document.getElementById("confirmPin").value;
+
+        var decryptResponse = JSON.parse(CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(response[0], sharedSecretHex)));
+        var pinDecry = CryptoJS.enc.Utf8.stringify(CryptoJS.AES.decrypt(response[1], sharedSecretHex));
+        var encrpytedPin = CryptoJS.AES.encrypt(JSON.stringify(newPin), pinDecry).toString();
+
+        if (otp === "" || otp === null) {
+            alert("Enter OTP");
+        } else if (newPin === "" || newPin === null) {
+            alert("Enter New PIN");
+        } else if (dob === "" || dob === null) {
+            alert("Enter DOB");
+        } else if (confirmPin === "" || confirmPin === null) {
+            alert("Enter Confirm PIN");
+        } else if (newPin !== confirmPin) {
+            alert("PIN Does Not Match");
+        } else {
+            console.log("ENCRYPTRESPONSE : " + encrpytedPin);
+            document.getElementById("newPin").value = encrpytedPin;
+            document.getElementById("confirmPin").value = encrpytedPin;
+            console.log("DECRYPTRESPONSE : " + decryptResponse);
+            var entityId = JSON.parse(decryptResponse.result.entityId);
+            var kitNo = JSON.parse(decryptResponse.result.kitNo);
+            var expDate = JSON.parse(decryptResponse.result.expiryDate);
+            var contactNo = JSON.stringify(decryptResponse.result.contactNo);
+            var verifyOtp = {};
+            verifyOtp.entityId = entityId;
+            verifyOtp.kitNo = kitNo;
+            verifyOtp.expiryDate = expDate;
+            verifyOtp.otp = otp;
+            verifyOtp.pin = encrpytedPin;
+            verifyOtp.dob = dob;
+            verifyOtp.contactNo = contactNo.replace(/"/g, "");
+
+            var encrpytValidatOtpData = {};
+            encrpytValidatOtpData.encryptedReq = CryptoJS.AES.encrypt(JSON.stringify(verifyOtp), sharedSecretHex).toString();
+            console.log(verifyOtp);
+            $.ajax({
+                url: '/url/validateOtpAndSetPin',
+                type: 'POST',
+                headers: { 'randomToken': randomToken[1] },
+                data: encrpytValidatOtpData,
+                success: function (res) {
+                    response = JSON.stringify(res);
+                    console.log("Response" + JSON.stringify(res));
+                    alert("PIN set successfully");
+                    window.location.href = '{{callbackUrl}}';
+                },
+                error: function (XMLHttpRequest) {
+                    alert(XMLHttpRequest.responseText);
+                }
+            });
+        }
+
+    }
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
+</script>
+
+</html>
